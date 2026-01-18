@@ -1,13 +1,22 @@
 # n8n-nodes-aivisspeech
 
-n8n community node for [AivisSpeech](https://github.com/Aivis-Project/AivisSpeech) (VOICEVOX-compatible) text-to-speech synthesis.
+English | [日本語](README.ja.md)
 
-## Features
+This is an n8n community node. It lets you use [AivisSpeech](https://github.com/Aivis-Project/AivisSpeech) (VOICEVOX-compatible) text-to-speech synthesis in your n8n workflows.
 
-- **Get Speakers** - List available speakers and their voice styles
-- **Synthesize** - Convert text to speech and save as WAV file
+AivisSpeech is a high-quality Japanese text-to-speech engine with VOICEVOX-compatible API.
+
+[n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
+
+[Installation](#installation)
+[Operations](#operations)
+[Credentials](#credentials)
+[Compatibility](#compatibility)
+[Resources](#resources)
 
 ## Installation
+
+Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
 
 ### Community Nodes (Recommended)
 
@@ -24,33 +33,48 @@ npm init -y
 npm install n8n-nodes-aivisspeech
 ```
 
-## Configuration
-
-1. Create new credentials for **AivisSpeech API**
-2. Set the **Base URL** (default: `http://localhost:10101`)
-   - For Docker: use `http://host.docker.internal:10101`
-
 ## Operations
 
-### Get Speakers
+### Speech Synthesis
 
-Returns a list of available speakers with their styles and IDs.
+| Operation | Description |
+|-----------|-------------|
+| **Get Speakers** | List available speakers and their voice styles |
+| **Synthesize (Simple)** | Convert text to speech (auto 2-step: AudioQuery + Synthesis) |
+| **Get AudioQuery** | Get AudioQuery (pronunciation/accent info) from text |
+| **Synthesize from AudioQuery** | Synthesize speech from AudioQuery JSON |
 
-### Synthesize
+### User Dictionary
 
-Converts text to speech audio.
+| Operation | Description |
+|-----------|-------------|
+| **Get User Dictionary** | List all words in user dictionary |
+| **Add Word** | Add a word to user dictionary |
+| **Update Word** | Update an existing word in user dictionary |
+| **Delete Word** | Delete a word from user dictionary |
 
-**Parameters:**
-- **Text** (required): The text to synthesize
-- **Speaker ID** (required): The speaker's style ID (get from "Get Speakers")
-- **Output Directory**: Where to save the WAV file (default: `/workspace/tts`)
-- **Filename**: Output filename (auto-generated if empty)
+## Credentials
 
-## Requirements
+To use this node, you need to configure the AivisSpeech API credentials:
 
-- AivisSpeech or VOICEVOX Engine running and accessible
-- n8n v1.0.0 or later
+| Field | Description | Default |
+|-------|-------------|---------|
+| **Base URL** | AivisSpeech engine URL | `http://localhost:10101` |
+
+**Docker users**: Use `http://host.docker.internal:10101` if AivisSpeech runs on your host machine.
+
+## Compatibility
+
+- **n8n version**: 1.0.0 or later
+- **AivisSpeech**: Any version with VOICEVOX-compatible API
+- **VOICEVOX**: Compatible with VOICEVOX Engine API
+
+## Resources
+
+* [n8n community nodes documentation](https://docs.n8n.io/integrations/community-nodes/)
+* [AivisSpeech GitHub](https://github.com/Aivis-Project/AivisSpeech)
+* [VOICEVOX API Reference](https://voicevox.github.io/voicevox_engine/api/)
 
 ## License
 
-MIT
+[MIT](LICENSE)

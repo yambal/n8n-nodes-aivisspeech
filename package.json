@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-aivisspeech",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "n8n node for AivisSpeech (VOICEVOX-compatible) TTS",
   "keywords": [
     "n8n",
@@ -29,7 +29,8 @@
     ]
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && npm run copy-assets",
+    "copy-assets": "node -e \"require('fs').cpSync('src/nodes/AivisSpeech/aivisspeech.svg', 'dist/nodes/AivisSpeech/aivisspeech.svg')\"",
     "dev": "tsc --watch",
     "prepublishOnly": "npm run build"
   },
