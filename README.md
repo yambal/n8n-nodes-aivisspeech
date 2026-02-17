@@ -77,6 +77,13 @@ To use this node, you need to configure the AivisSpeech API credentials:
 
 ## Changelog
 
+### 0.4.3
+
+- Added: multi-text synthesis operation (combine multiple texts into one audio via `/connect_waves`)
+- Added: per-text speaker ID and silence overrides for multi-text synthesis
+- Added: GUI and JSON input modes for multi-text synthesis
+- Fixed: binary property name now correctly sets the output key (not filename)
+
 ### 0.4.2
 
 - Added: AudioQuery parameters (speed, pitch, intonation, volume, silence, sampling rate, stereo) to simple synthesis

@@ -34,6 +34,12 @@ const operationProperty: INodeProperties = {
 			action: 'AudioQueryから音声を合成',
 		},
 		{
+			name: '複数テキスト音声合成',
+			value: 'multiSynthesis',
+			description: '複数テキストを合成して1つの音声に結合',
+			action: '複数テキストを合成して結合',
+		},
+		{
 			name: 'ユーザー辞書一覧取得',
 			value: 'getUserDict',
 			description: 'ユーザー辞書に登録されている単語一覧を取得',
