@@ -63,6 +63,12 @@ const operationProperty: INodeProperties = {
 			description: 'ユーザー辞書から単語を削除',
 			action: 'ユーザー辞書から単語を削除',
 		},
+		{
+			name: 'パラメータガイド取得',
+			value: 'getParameterGuide',
+			description: 'パラメータ設定ガイド（Markdown）とJSON入力フォーマット定義を取得',
+			action: 'パラメータガイドを取得',
+		},
 	],
 	default: 'synthesize',
 };

@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-aivisspeech",
-  "version": "0.4.8",
+  "version": "0.4.9",
   "description": "n8n node for AivisSpeech (VOICEVOX-compatible) TTS",
   "keywords": [
     "n8n",
