@@ -23,16 +23,3 @@ export async function apiRequest(
 	}
 	return response;
 }
-
-/**
- * ファイル名を解決する。空の場合はタイムスタンプで自動生成し、.wav拡張子を付与する。
- */
-export function resolveFilename(filename: string): string {
-	if (!filename) {
-		filename = `tts_${Date.now()}.wav`;
-	}
-	if (!filename.endsWith('.wav')) {
-		filename += '.wav';
-	}
-	return filename;
-}

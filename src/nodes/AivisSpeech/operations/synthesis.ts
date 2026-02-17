@@ -1,5 +1,5 @@
 import { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
-import { apiRequest, resolveFilename } from '../helpers';
+import { apiRequest } from '../helpers';
 import { AudioQuery } from '../types';
 
 export async function synthesize(
@@ -9,9 +9,7 @@ export async function synthesize(
 ): Promise<INodeExecutionData> {
 	const text = executeFunctions.getNodeParameter('text', itemIndex) as string;
 	const speakerId = executeFunctions.getNodeParameter('speakerId', itemIndex) as number;
-	const filename = resolveFilename(
-		executeFunctions.getNodeParameter('filename', itemIndex) as string,
-	);
+	const binaryPropertyName = executeFunctions.getNodeParameter('binaryPropertyName', itemIndex) as string;
 
 	// Step 1: AudioQuery取得
 	const queryResponse = await apiRequest(
@@ -49,11 +47,11 @@ export async function synthesize(
 	);
 
 	const buffer = Buffer.from(await synthesisResponse.arrayBuffer());
-	const binaryData = await executeFunctions.helpers.prepareBinaryData(buffer, filename, 'audio/wav');
+	const binaryData = await executeFunctions.helpers.prepareBinaryData(buffer, `tts_${Date.now()}.wav`, 'audio/wav');
 
 	return {
 		json: { success: true, text, speakerId },
-		binary: { data: binaryData },
+		binary: { [binaryPropertyName]: binaryData },
 	};
 }
 
@@ -84,9 +82,7 @@ export async function synthesisFromQuery(
 	itemIndex: number,
 ): Promise<INodeExecutionData> {
 	const speakerId = executeFunctions.getNodeParameter('speakerId', itemIndex) as number;
-	const filename = resolveFilename(
-		executeFunctions.getNodeParameter('filename', itemIndex) as string,
-	);
+	const binaryPropertyName = executeFunctions.getNodeParameter('binaryPropertyName', itemIndex) as string;
 	const audioQueryJson = executeFunctions.getNodeParameter('audioQueryJson', itemIndex) as object;
 
 	const response = await apiRequest(
@@ -103,10 +99,10 @@ export async function synthesisFromQuery(
 	);
 
 	const buffer = Buffer.from(await response.arrayBuffer());
-	const binaryData = await executeFunctions.helpers.prepareBinaryData(buffer, filename, 'audio/wav');
+	const binaryData = await executeFunctions.helpers.prepareBinaryData(buffer, `tts_${Date.now()}.wav`, 'audio/wav');
 
 	return {
 		json: { success: true, speakerId },
-		binary: { data: binaryData },
+		binary: { [binaryPropertyName]: binaryData },
 	};
 }

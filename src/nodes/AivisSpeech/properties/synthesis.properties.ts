@@ -28,16 +28,16 @@ export const synthesisProperties: INodeProperties[] = [
 		description: '話者のスタイルID（話者一覧取得で確認可能）',
 	},
 	{
-		displayName: 'バイナリ名',
-		name: 'filename',
+		displayName: 'バイナリプロパティ名',
+		name: 'binaryPropertyName',
 		type: 'string',
-		default: '',
+		default: 'data',
 		displayOptions: {
 			show: {
 				operation: ['synthesize', 'synthesisFromQuery'],
 			},
 		},
-		description: 'バイナリ出力のファイル名（空の場合は自動生成）',
+		description: 'バイナリ出力のプロパティ名（後続ノードで $binary.この名前 で参照）',
 	},
 	// AudioQueryパラメータ（音声合成簡略用オプション）
 	{
