@@ -24,6 +24,16 @@ export async function synthesize(
 	);
 	const audioQuery = (await queryResponse.json()) as AudioQuery;
 
+	// AudioQueryパラメータを上書き
+	audioQuery.speedScale = executeFunctions.getNodeParameter('speedScale', itemIndex) as number;
+	audioQuery.pitchScale = executeFunctions.getNodeParameter('pitchScale', itemIndex) as number;
+	audioQuery.intonationScale = executeFunctions.getNodeParameter('intonationScale', itemIndex) as number;
+	audioQuery.volumeScale = executeFunctions.getNodeParameter('volumeScale', itemIndex) as number;
+	audioQuery.prePhonemeLength = executeFunctions.getNodeParameter('prePhonemeLength', itemIndex) as number;
+	audioQuery.postPhonemeLength = executeFunctions.getNodeParameter('postPhonemeLength', itemIndex) as number;
+	audioQuery.outputSamplingRate = executeFunctions.getNodeParameter('outputSamplingRate', itemIndex) as number;
+	audioQuery.outputStereo = executeFunctions.getNodeParameter('outputStereo', itemIndex) as boolean;
+
 	// Step 2: 音声合成
 	const synthesisResponse = await apiRequest(
 		executeFunctions.getNode(),

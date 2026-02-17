@@ -77,6 +77,11 @@ To use this node, you need to configure the AivisSpeech API credentials:
 
 ## Changelog
 
+### 0.4.2
+
+- Added: AudioQuery parameters (speed, pitch, intonation, volume, silence, sampling rate, stereo) to simple synthesis
+- Updated: official AivisSpeech icon
+
 ### 0.4.1
 
 - Changed: speech synthesis now outputs binary data instead of saving files to disk
