@@ -2,17 +2,27 @@ import { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
 import { apiRequest } from '../helpers';
 import { AudioQuery } from '../types';
 
+/** per-textオーバーライド可能なAudioQueryパラメータ */
+interface AudioQueryOverrides {
+	speedScale?: number;
+	pitchScale?: number;
+	intonationScale?: number;
+	volumeScale?: number;
+	prePhonemeLength?: number;
+	postPhonemeLength?: number;
+}
+
 /** AudioQueryパラメータをノードパラメータで上書きする */
 function applyAudioQueryParams(
 	audioQuery: AudioQuery,
 	executeFunctions: IExecuteFunctions,
 	itemIndex: number,
-	overrides?: { prePhonemeLength?: number; postPhonemeLength?: number },
+	overrides?: AudioQueryOverrides,
 ): void {
-	audioQuery.speedScale = executeFunctions.getNodeParameter('speedScale', itemIndex) as number;
-	audioQuery.pitchScale = executeFunctions.getNodeParameter('pitchScale', itemIndex) as number;
-	audioQuery.intonationScale = executeFunctions.getNodeParameter('intonationScale', itemIndex) as number;
-	audioQuery.volumeScale = executeFunctions.getNodeParameter('volumeScale', itemIndex) as number;
+	audioQuery.speedScale = overrides?.speedScale ?? executeFunctions.getNodeParameter('speedScale', itemIndex) as number;
+	audioQuery.pitchScale = overrides?.pitchScale ?? executeFunctions.getNodeParameter('pitchScale', itemIndex) as number;
+	audioQuery.intonationScale = overrides?.intonationScale ?? executeFunctions.getNodeParameter('intonationScale', itemIndex) as number;
+	audioQuery.volumeScale = overrides?.volumeScale ?? executeFunctions.getNodeParameter('volumeScale', itemIndex) as number;
 	audioQuery.prePhonemeLength = overrides?.prePhonemeLength ?? executeFunctions.getNodeParameter('prePhonemeLength', itemIndex) as number;
 	audioQuery.postPhonemeLength = overrides?.postPhonemeLength ?? executeFunctions.getNodeParameter('postPhonemeLength', itemIndex) as number;
 	audioQuery.outputSamplingRate = executeFunctions.getNodeParameter('outputSamplingRate', itemIndex) as number;
@@ -120,6 +130,10 @@ export async function synthesisFromQuery(
 interface TextItem {
 	text: string;
 	speakerId?: number;
+	speedScale?: number;
+	pitchScale?: number;
+	intonationScale?: number;
+	volumeScale?: number;
 	prePhonemeLength?: number;
 	postPhonemeLength?: number;
 }
@@ -140,17 +154,13 @@ export async function multiSynthesize(
 			textItems?: Array<{
 				text: string;
 				speakerId?: number;
-				overrides?: {
-					prePhonemeLength?: number;
-					postPhonemeLength?: number;
-				};
+				overrides?: AudioQueryOverrides;
 			}>;
 		};
 		textItems = (textsData.textItems ?? []).map((item) => ({
 			text: item.text,
 			speakerId: item.speakerId !== undefined && item.speakerId >= 0 ? item.speakerId : undefined,
-			prePhonemeLength: item.overrides?.prePhonemeLength,
-			postPhonemeLength: item.overrides?.postPhonemeLength,
+			...item.overrides,
 		}));
 	} else {
 		const jsonInput = executeFunctions.getNodeParameter('textsJson', itemIndex) as TextItem[];
@@ -180,6 +190,10 @@ export async function multiSynthesize(
 
 		// AudioQueryパラメータを上書き（per-textオーバーライドあり）
 		applyAudioQueryParams(audioQuery, executeFunctions, itemIndex, {
+			speedScale: item.speedScale,
+			pitchScale: item.pitchScale,
+			intonationScale: item.intonationScale,
+			volumeScale: item.volumeScale,
 			prePhonemeLength: item.prePhonemeLength,
 			postPhonemeLength: item.postPhonemeLength,
 		});
