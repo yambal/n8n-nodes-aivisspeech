@@ -43,6 +43,13 @@ npm install n8n-nodes-aivisspeech
 | **音声合成（簡略）** | テキストから音声を合成（AudioQuery取得と合成を自動実行） |
 | **AudioQuery取得** | テキストから読み方・アクセント情報を取得 |
 | **音声合成（AudioQueryから）** | AudioQuery JSONから音声を合成 |
+| **複数テキスト音声合成** | 複数テキストを合成して1つの音声ファイルに結合 |
+
+### リファレンス
+
+| 操作 | 説明 |
+|------|------|
+| **パラメータガイド取得** | パラメータ設定ガイド（Markdown）・AIプロンプト用フォーマットガイド・JSONスキーマを取得 |
 
 ### ユーザー辞書
 
@@ -99,6 +106,23 @@ AivisSpeech API認証情報を設定する必要があります：
 * [VOICEVOX APIリファレンス](https://voicevox.github.io/voicevox_engine/api/)
 
 ## 変更履歴
+
+### 0.4.11
+
+- 変更: `getFormatGuide` オペレーションを `getParameterGuide` に統合（`parameterGuide`・`formatGuide`・`jsonSchema` を一括返却）
+- 変更: フォーマットガイドからシステムプロンプト部分を削除（ユーザーが独自に記述する想定）
+
+### 0.4.10
+
+- 追加: フォーマットガイド取得オペレーション（`getFormatGuide`）AIプロンプト用JSON生成指示書（Markdown）を返却
+- 変更: フォーマット定義を JSON Schema 2020-12 準拠に変更
+- 変更: 全UIパラメータラベルに英語パラメータ名を併記（例: 「話速: speedScale」）
+- 変更: JSON入力欄のヒントをモノスペース表示・コメント付きに改善
+
+### 0.4.9
+
+- 追加: パラメータガイド取得オペレーション（`getParameterGuide`）パラメータ設定ガイド（Markdown）とJSONスキーマを返却
+- 追加: `docs/parameter-guide.md` スタンドアロンドキュメント
 
 ### 0.4.8
 

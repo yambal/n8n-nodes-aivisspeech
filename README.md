@@ -43,6 +43,13 @@ npm install n8n-nodes-aivisspeech
 | **Synthesize (Simple)** | Convert text to speech (auto 2-step: AudioQuery + Synthesis) |
 | **Get AudioQuery** | Get AudioQuery (pronunciation/accent info) from text |
 | **Synthesize from AudioQuery** | Synthesize speech from AudioQuery JSON |
+| **Multi-Text Synthesis** | Synthesize multiple texts and combine into one audio file |
+
+### Reference
+
+| Operation | Description |
+|-----------|-------------|
+| **Get Parameter Guide** | Get parameter guide (Markdown), format guide for AI prompts, and JSON Schema |
 
 ### User Dictionary
 
@@ -76,6 +83,23 @@ To use this node, you need to configure the AivisSpeech API credentials:
 * [VOICEVOX API Reference](https://voicevox.github.io/voicevox_engine/api/)
 
 ## Changelog
+
+### 0.4.11
+
+- Changed: merged `getFormatGuide` operation into `getParameterGuide` (now returns `parameterGuide`, `formatGuide`, and `jsonSchema` in one call)
+- Changed: removed system prompt intro from format guide (users provide their own system prompt)
+
+### 0.4.10
+
+- Added: format guide operation (`getFormatGuide`) returning AI prompt instruction Markdown for JSON generation
+- Changed: format definition converted to standard JSON Schema 2020-12
+- Changed: all UI parameter labels now show bilingual format (e.g., "話速: speedScale")
+- Changed: JSON input hint formatted with monospace styling and gray comments
+
+### 0.4.9
+
+- Added: parameter guide operation (`getParameterGuide`) returning detailed parameter guide (Markdown) and JSON Schema
+- Added: `docs/parameter-guide.md` standalone documentation
 
 ### 0.4.8
 

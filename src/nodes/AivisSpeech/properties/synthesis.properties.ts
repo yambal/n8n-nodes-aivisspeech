@@ -154,6 +154,7 @@ export const synthesisProperties: INodeProperties[] = [
 		type: 'fixedCollection',
 		typeOptions: {
 			multipleValues: true,
+			multipleValueButtonText: 'テキストを追加',
 		},
 		default: {},
 		displayOptions: {
