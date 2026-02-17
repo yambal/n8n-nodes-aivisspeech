@@ -77,6 +77,12 @@ To use this node, you need to configure the AivisSpeech API credentials:
 
 ## Changelog
 
+### 0.4.8
+
+- Changed: `intonationScale` label renamed from "抑揚" to "感情表現" to match AivisSpeech API semantics
+- Added: min/max values to all parameter descriptions
+- Added: JSON input hint with formatted full-set example below input field
+
 ### 0.4.7
 
 - Added: `pauseLength` and `tempoDynamicsScale` parameters to all synthesis operations

@@ -59,7 +59,7 @@ export const synthesisProperties: INodeProperties[] = [
 				type: 'number',
 				default: 1.0,
 				typeOptions: { minValue: 0.5, maxValue: 2.0, numberStepSize: 0.1 },
-				description: 'ベースの話す速さ（0.5〜2.0、デフォルト: 1.0）',
+				description: 'ベースの話す速さ（最小: 0.5、最大: 2.0、デフォルト: 1.0）',
 			},
 			{
 				displayName: 'ベース音高',
@@ -67,15 +67,15 @@ export const synthesisProperties: INodeProperties[] = [
 				type: 'number',
 				default: 0.0,
 				typeOptions: { minValue: -0.15, maxValue: 0.15, numberStepSize: 0.01 },
-				description: 'ベースの声の高さ（-0.15〜0.15、デフォルト: 0.0）',
+				description: 'ベースの声の高さ（最小: -0.15、最大: 0.15、デフォルト: 0.0）',
 			},
 			{
-				displayName: 'ベース抑揚',
+				displayName: 'ベース感情表現',
 				name: 'intonationScale',
 				type: 'number',
 				default: 1.0,
 				typeOptions: { minValue: 0.0, maxValue: 2.0, numberStepSize: 0.1 },
-				description: 'ベースの抑揚の強さ（0.0〜2.0、デフォルト: 1.0）',
+				description: 'ベースの感情表現の強弱（最小: 0.0、最大: 2.0、デフォルト: 1.0）。話者スタイルに応じた感情の込め方を調整',
 			},
 			{
 				displayName: 'ベース音量',
@@ -83,7 +83,7 @@ export const synthesisProperties: INodeProperties[] = [
 				type: 'number',
 				default: 1.0,
 				typeOptions: { minValue: 0.0, maxValue: 2.0, numberStepSize: 0.1 },
-				description: 'ベースの音量（0.0〜2.0、デフォルト: 1.0）',
+				description: 'ベースの音量（最小: 0.0、最大: 2.0、デフォルト: 1.0）',
 			},
 			{
 				displayName: 'ベース開始無音',
@@ -91,7 +91,7 @@ export const synthesisProperties: INodeProperties[] = [
 				type: 'number',
 				default: 0.1,
 				typeOptions: { minValue: 0.0, maxValue: 1.5, numberStepSize: 0.1 },
-				description: 'ベースの音声開始前の無音の長さ（秒、デフォルト: 0.1）',
+				description: 'ベースの音声開始前の無音の長さ（最小: 0.0秒、最大: 1.5秒、デフォルト: 0.1秒）',
 			},
 			{
 				displayName: 'ベース終了無音',
@@ -99,7 +99,7 @@ export const synthesisProperties: INodeProperties[] = [
 				type: 'number',
 				default: 0.1,
 				typeOptions: { minValue: 0.0, maxValue: 1.5, numberStepSize: 0.1 },
-				description: 'ベースの音声終了後の無音の長さ（秒、デフォルト: 0.1）',
+				description: 'ベースの音声終了後の無音の長さ（最小: 0.0秒、最大: 1.5秒、デフォルト: 0.1秒）',
 			},
 			{
 				displayName: 'ベース句読点無音',
@@ -107,7 +107,7 @@ export const synthesisProperties: INodeProperties[] = [
 				type: 'number',
 				default: 0.0,
 				typeOptions: { minValue: 0.0, maxValue: 3.0, numberStepSize: 0.1 },
-				description: 'ベースの句読点などの無音時間（秒）。未設定の場合はAPIデフォルト（null=自動）を使用',
+				description: 'ベースの句読点などの無音時間（最小: 0.0秒、最大: 3.0秒）。未設定の場合はAPIデフォルト（null=自動）を使用',
 			},
 			{
 				displayName: 'ベーステンポ緩急',
@@ -115,7 +115,7 @@ export const synthesisProperties: INodeProperties[] = [
 				type: 'number',
 				default: 1.0,
 				typeOptions: { minValue: 0.0, maxValue: 2.0, numberStepSize: 0.1 },
-				description: 'ベースのテンポの緩急の強弱（0.0〜2.0、デフォルト: 1.0）。AivisSpeech固有',
+				description: 'ベースのテンポの緩急の強弱（最小: 0.0、最大: 2.0、デフォルト: 1.0）。AivisSpeech固有',
 			},
 		],
 	},
@@ -196,7 +196,7 @@ export const synthesisProperties: INodeProperties[] = [
 								type: 'number',
 								default: 1.0,
 								typeOptions: { minValue: 0.5, maxValue: 2.0, numberStepSize: 0.1 },
-								description: '個別の話速。未設定の場合はベースの値を使用',
+								description: '個別の話速（最小: 0.5、最大: 2.0）。未設定の場合はベースの値を使用',
 							},
 							{
 								displayName: '音高',
@@ -204,15 +204,15 @@ export const synthesisProperties: INodeProperties[] = [
 								type: 'number',
 								default: 0.0,
 								typeOptions: { minValue: -0.15, maxValue: 0.15, numberStepSize: 0.01 },
-								description: '個別の音高。未設定の場合はベースの値を使用',
+								description: '個別の音高（最小: -0.15、最大: 0.15）。未設定の場合はベースの値を使用',
 							},
 							{
-								displayName: '抑揚',
+								displayName: '感情表現',
 								name: 'intonationScale',
 								type: 'number',
 								default: 1.0,
 								typeOptions: { minValue: 0.0, maxValue: 2.0, numberStepSize: 0.1 },
-								description: '個別の抑揚。未設定の場合はベースの値を使用',
+								description: '個別の感情表現の強弱（最小: 0.0、最大: 2.0）。未設定の場合はベースの値を使用',
 							},
 							{
 								displayName: '音量',
@@ -220,7 +220,7 @@ export const synthesisProperties: INodeProperties[] = [
 								type: 'number',
 								default: 1.0,
 								typeOptions: { minValue: 0.0, maxValue: 2.0, numberStepSize: 0.1 },
-								description: '個別の音量。未設定の場合はベースの値を使用',
+								description: '個別の音量（最小: 0.0、最大: 2.0）。未設定の場合はベースの値を使用',
 							},
 							{
 								displayName: '開始無音',
@@ -228,7 +228,7 @@ export const synthesisProperties: INodeProperties[] = [
 								type: 'number',
 								default: 0.1,
 								typeOptions: { minValue: 0.0, maxValue: 1.5, numberStepSize: 0.1 },
-								description: '個別の開始無音（秒）。未設定の場合はベースの値を使用',
+								description: '個別の開始無音（最小: 0.0秒、最大: 1.5秒）。未設定の場合はベースの値を使用',
 							},
 							{
 								displayName: '終了無音',
@@ -236,7 +236,7 @@ export const synthesisProperties: INodeProperties[] = [
 								type: 'number',
 								default: 0.1,
 								typeOptions: { minValue: 0.0, maxValue: 1.5, numberStepSize: 0.1 },
-								description: '個別の終了無音（秒）。未設定の場合はベースの値を使用',
+								description: '個別の終了無音（最小: 0.0秒、最大: 1.5秒）。未設定の場合はベースの値を使用',
 							},
 							{
 								displayName: '句読点無音',
@@ -244,7 +244,7 @@ export const synthesisProperties: INodeProperties[] = [
 								type: 'number',
 								default: 0.0,
 								typeOptions: { minValue: 0.0, maxValue: 3.0, numberStepSize: 0.1 },
-								description: '個別の句読点などの無音時間（秒）。未設定の場合はベースの値を使用',
+								description: '個別の句読点などの無音時間（最小: 0.0秒、最大: 3.0秒）。未設定の場合はベースの値を使用',
 							},
 							{
 								displayName: 'テンポ緩急',
@@ -252,7 +252,7 @@ export const synthesisProperties: INodeProperties[] = [
 								type: 'number',
 								default: 1.0,
 								typeOptions: { minValue: 0.0, maxValue: 2.0, numberStepSize: 0.1 },
-								description: '個別のテンポの緩急（0.0〜2.0）。未設定の場合はベースの値を使用',
+								description: '個別のテンポの緩急（最小: 0.0、最大: 2.0）。未設定の場合はベースの値を使用',
 							},
 						],
 					},
@@ -273,6 +273,7 @@ export const synthesisProperties: INodeProperties[] = [
 			},
 		},
 		description: 'テキスト一覧のJSON配列。text のみ必須、他はすべてオプション（未指定時はベース設定→APIデフォルトを使用）',
+		hint: '<pre style="font-size:11px;line-height:1.4;margin:4px 0;white-space:pre-wrap">[\n  { "text": "テキスト1" },\n  {\n    "text": "テキスト2",\n    "speakerId": 888753760,\n    "speedScale": 1.0,\n    "pitchScale": 0.0,\n    "intonationScale": 1.0,\n    "volumeScale": 1.0,\n    "prePhonemeLength": 0.1,\n    "postPhonemeLength": 0.1,\n    "pauseLength": 0.0,\n    "tempoDynamicsScale": 1.0\n  }\n]</pre>',
 	},
 	// AudioQueryパラメータ（音声合成簡略用オプション）
 	{
@@ -294,7 +295,7 @@ export const synthesisProperties: INodeProperties[] = [
 				type: 'number',
 				default: 1.0,
 				typeOptions: { minValue: 0.5, maxValue: 2.0, numberStepSize: 0.1 },
-				description: '話す速さ（0.5〜2.0、デフォルト: 1.0）',
+				description: '話す速さ（最小: 0.5、最大: 2.0、デフォルト: 1.0）',
 			},
 			{
 				displayName: '音高',
@@ -302,15 +303,15 @@ export const synthesisProperties: INodeProperties[] = [
 				type: 'number',
 				default: 0.0,
 				typeOptions: { minValue: -0.15, maxValue: 0.15, numberStepSize: 0.01 },
-				description: '声の高さ（-0.15〜0.15、デフォルト: 0.0）',
+				description: '声の高さ（最小: -0.15、最大: 0.15、デフォルト: 0.0）',
 			},
 			{
-				displayName: '抑揚',
+				displayName: '感情表現',
 				name: 'intonationScale',
 				type: 'number',
 				default: 1.0,
 				typeOptions: { minValue: 0.0, maxValue: 2.0, numberStepSize: 0.1 },
-				description: '抑揚の強さ（0.0〜2.0、デフォルト: 1.0）',
+				description: '感情表現の強弱（最小: 0.0、最大: 2.0、デフォルト: 1.0）。話者スタイルに応じた感情の込め方を調整',
 			},
 			{
 				displayName: '音量',
@@ -318,7 +319,7 @@ export const synthesisProperties: INodeProperties[] = [
 				type: 'number',
 				default: 1.0,
 				typeOptions: { minValue: 0.0, maxValue: 2.0, numberStepSize: 0.1 },
-				description: '音量（0.0〜2.0、デフォルト: 1.0）',
+				description: '音量（最小: 0.0、最大: 2.0、デフォルト: 1.0）',
 			},
 			{
 				displayName: '開始無音',
@@ -326,7 +327,7 @@ export const synthesisProperties: INodeProperties[] = [
 				type: 'number',
 				default: 0.1,
 				typeOptions: { minValue: 0.0, maxValue: 1.5, numberStepSize: 0.1 },
-				description: '音声開始前の無音の長さ（秒、デフォルト: 0.1）',
+				description: '音声開始前の無音の長さ（最小: 0.0秒、最大: 1.5秒、デフォルト: 0.1秒）',
 			},
 			{
 				displayName: '終了無音',
@@ -334,7 +335,7 @@ export const synthesisProperties: INodeProperties[] = [
 				type: 'number',
 				default: 0.1,
 				typeOptions: { minValue: 0.0, maxValue: 1.5, numberStepSize: 0.1 },
-				description: '音声終了後の無音の長さ（秒、デフォルト: 0.1）',
+				description: '音声終了後の無音の長さ（最小: 0.0秒、最大: 1.5秒、デフォルト: 0.1秒）',
 			},
 			{
 				displayName: '句読点無音',
@@ -342,7 +343,7 @@ export const synthesisProperties: INodeProperties[] = [
 				type: 'number',
 				default: 0.0,
 				typeOptions: { minValue: 0.0, maxValue: 3.0, numberStepSize: 0.1 },
-				description: '句読点などの無音時間（秒）。未設定の場合はAPIデフォルト（null=自動）を使用',
+				description: '句読点などの無音時間（最小: 0.0秒、最大: 3.0秒）。未設定の場合はAPIデフォルト（null=自動）を使用',
 			},
 			{
 				displayName: 'テンポ緩急',
@@ -350,7 +351,7 @@ export const synthesisProperties: INodeProperties[] = [
 				type: 'number',
 				default: 1.0,
 				typeOptions: { minValue: 0.0, maxValue: 2.0, numberStepSize: 0.1 },
-				description: 'テンポの緩急の強弱（0.0〜2.0、デフォルト: 1.0）。AivisSpeech固有',
+				description: 'テンポの緩急の強弱（最小: 0.0、最大: 2.0、デフォルト: 1.0）。AivisSpeech固有',
 			},
 		],
 	},

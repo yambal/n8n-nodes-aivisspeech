@@ -100,6 +100,12 @@ AivisSpeech API認証情報を設定する必要があります：
 
 ## 変更履歴
 
+### 0.4.8
+
+- 変更: intonationScaleの表示名を「抑揚」から「感情表現」に変更（AivisSpeech APIの仕様に準拠）
+- 追加: 全パラメータの説明に最小値・最大値を追記
+- 追加: JSON入力欄の下にフォーマット済みサンプルを表示
+
 ### 0.4.7
 
 - 追加: 句読点無音（pauseLength）とテンポ緩急（tempoDynamicsScale）を全音声合成操作に追加
