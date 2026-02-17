@@ -1,6 +1,4 @@
 import { NodeOperationError, INode } from 'n8n-workflow';
-import * as fs from 'fs/promises';
-import * as path from 'path';
 
 /**
  * AivisSpeech API へのリクエストを送信し、レスポンスを返す。
@@ -24,20 +22,6 @@ export async function apiRequest(
 		);
 	}
 	return response;
-}
-
-/**
- * WAVファイルを保存する。ディレクトリが存在しない場合は作成する。
- */
-export async function saveWavFile(
-	outputDir: string,
-	filename: string,
-	audioBuffer: ArrayBuffer,
-): Promise<string> {
-	const filePath = path.join(outputDir, filename);
-	await fs.mkdir(outputDir, { recursive: true });
-	await fs.writeFile(filePath, Buffer.from(audioBuffer));
-	return filePath;
 }
 
 /**

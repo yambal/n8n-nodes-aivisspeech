@@ -98,6 +98,27 @@ AivisSpeech API認証情報を設定する必要があります：
 * [AivisSpeech GitHub](https://github.com/Aivis-Project/AivisSpeech)
 * [VOICEVOX APIリファレンス](https://voicevox.github.io/voicevox_engine/api/)
 
+## 変更履歴
+
+### 0.4.1
+
+- 変更: 音声合成の出力をファイル保存からバイナリデータ出力に変更
+- 削除: `出力ディレクトリ` パラメータ（不要になったため）
+
+### 0.4.0
+
+- リファクタリング: ノードファイルをモジュール分割し、保守性を向上
+
+### 0.3.1
+
+- 追加: ユーザー辞書操作（一覧取得・追加・更新・削除）
+- 改善: 日本語UIラベルと説明文
+
+### 0.1.0
+
+- 初回リリース
+- 音声合成操作（話者一覧取得、音声合成、AudioQuery取得、AudioQueryからの合成）
+
 ## ライセンス
 
 [MIT](LICENSE)

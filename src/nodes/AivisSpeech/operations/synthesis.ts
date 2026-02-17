@@ -1,5 +1,5 @@
 import { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
-import { apiRequest, saveWavFile, resolveFilename } from '../helpers';
+import { apiRequest, resolveFilename } from '../helpers';
 import { AudioQuery } from '../types';
 
 export async function synthesize(
@@ -9,7 +9,6 @@ export async function synthesize(
 ): Promise<INodeExecutionData> {
 	const text = executeFunctions.getNodeParameter('text', itemIndex) as string;
 	const speakerId = executeFunctions.getNodeParameter('speakerId', itemIndex) as number;
-	const outputDir = executeFunctions.getNodeParameter('outputDir', itemIndex) as string;
 	const filename = resolveFilename(
 		executeFunctions.getNodeParameter('filename', itemIndex) as string,
 	);
@@ -39,10 +38,13 @@ export async function synthesize(
 		'音声合成に失敗しました',
 	);
 
-	const audioBuffer = await synthesisResponse.arrayBuffer();
-	const filePath = await saveWavFile(outputDir, filename, audioBuffer);
+	const buffer = Buffer.from(await synthesisResponse.arrayBuffer());
+	const binaryData = await executeFunctions.helpers.prepareBinaryData(buffer, filename, 'audio/wav');
 
-	return { json: { success: true, filePath, text, speakerId } };
+	return {
+		json: { success: true, text, speakerId },
+		binary: { data: binaryData },
+	};
 }
 
 export async function audioQuery(
@@ -72,7 +74,6 @@ export async function synthesisFromQuery(
 	itemIndex: number,
 ): Promise<INodeExecutionData> {
 	const speakerId = executeFunctions.getNodeParameter('speakerId', itemIndex) as number;
-	const outputDir = executeFunctions.getNodeParameter('outputDir', itemIndex) as string;
 	const filename = resolveFilename(
 		executeFunctions.getNodeParameter('filename', itemIndex) as string,
 	);
@@ -91,8 +92,11 @@ export async function synthesisFromQuery(
 		'音声合成に失敗しました',
 	);
 
-	const audioBuffer = await response.arrayBuffer();
-	const filePath = await saveWavFile(outputDir, filename, audioBuffer);
+	const buffer = Buffer.from(await response.arrayBuffer());
+	const binaryData = await executeFunctions.helpers.prepareBinaryData(buffer, filename, 'audio/wav');
 
-	return { json: { success: true, filePath, speakerId } };
+	return {
+		json: { success: true, speakerId },
+		binary: { data: binaryData },
+	};
 }

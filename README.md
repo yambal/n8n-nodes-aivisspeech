@@ -75,6 +75,27 @@ To use this node, you need to configure the AivisSpeech API credentials:
 * [AivisSpeech GitHub](https://github.com/Aivis-Project/AivisSpeech)
 * [VOICEVOX API Reference](https://voicevox.github.io/voicevox_engine/api/)
 
+## Changelog
+
+### 0.4.1
+
+- Changed: speech synthesis now outputs binary data instead of saving files to disk
+- Removed: `outputDir` parameter (no longer needed)
+
+### 0.4.0
+
+- Refactored: split monolithic node into modular file structure for better maintainability
+
+### 0.3.1
+
+- Added: user dictionary operations (Get / Add / Update / Delete)
+- Improved: UI labels and descriptions in Japanese
+
+### 0.1.0
+
+- Initial release
+- Speech synthesis operations (Get Speakers, Synthesize, AudioQuery, Synthesize from AudioQuery)
+
 ## License
 
 [MIT](LICENSE)

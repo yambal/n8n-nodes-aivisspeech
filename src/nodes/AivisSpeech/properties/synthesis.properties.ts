@@ -28,18 +28,6 @@ export const synthesisProperties: INodeProperties[] = [
 		description: '話者のスタイルID（話者一覧取得で確認可能）',
 	},
 	{
-		displayName: '出力ディレクトリ',
-		name: 'outputDir',
-		type: 'string',
-		default: '/workspace/tts',
-		displayOptions: {
-			show: {
-				operation: ['synthesize', 'synthesisFromQuery'],
-			},
-		},
-		description: 'WAVファイルの保存先ディレクトリ',
-	},
-	{
 		displayName: 'ファイル名',
 		name: 'filename',
 		type: 'string',
@@ -49,7 +37,7 @@ export const synthesisProperties: INodeProperties[] = [
 				operation: ['synthesize', 'synthesisFromQuery'],
 			},
 		},
-		description: '出力ファイル名（空の場合は自動生成）',
+		description: 'バイナリ出力のファイル名（空の場合は自動生成）',
 	},
 	{
 		displayName: 'AudioQuery (JSON)',
