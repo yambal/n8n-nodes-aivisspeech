@@ -77,6 +77,13 @@ To use this node, you need to configure the AivisSpeech API credentials:
 
 ## Changelog
 
+### 0.4.5
+
+- Changed: multi-text synthesis base audio params (speed, pitch, intonation, volume, silence) now use optional "Add Field" collection instead of always-visible fields
+- Changed: per-text speaker ID moved into optional overrides collection (removed -1 sentinel)
+- Changed: JSON input mode now supports all per-text override fields
+- Improved: parameter priority for multi-text synthesis: per-text > base collection > API default
+
 ### 0.4.4
 
 - Added: per-text AudioQuery parameter overrides (speed, pitch, intonation, volume, silence) for multi-text synthesis

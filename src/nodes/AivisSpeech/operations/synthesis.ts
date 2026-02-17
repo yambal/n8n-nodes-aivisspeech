@@ -146,6 +146,7 @@ export async function multiSynthesize(
 	const baseSpeakerId = executeFunctions.getNodeParameter('speakerId', itemIndex) as number;
 	const binaryPropertyName = executeFunctions.getNodeParameter('binaryPropertyName', itemIndex) as string;
 	const inputMode = executeFunctions.getNodeParameter('inputMode', itemIndex) as string;
+	const baseAudioParams = executeFunctions.getNodeParameter('baseAudioParams', itemIndex, {}) as AudioQueryOverrides;
 
 	// テキスト一覧を取得
 	let textItems: TextItem[];
@@ -153,22 +154,25 @@ export async function multiSynthesize(
 		const textsData = executeFunctions.getNodeParameter('texts', itemIndex) as {
 			textItems?: Array<{
 				text: string;
-				speakerId?: number;
-				overrides?: AudioQueryOverrides;
+				overrides?: AudioQueryOverrides & { speakerId?: number };
 			}>;
 		};
 		textItems = (textsData.textItems ?? []).map((item) => ({
 			text: item.text,
-			speakerId: item.speakerId !== undefined && item.speakerId >= 0 ? item.speakerId : undefined,
+			speakerId: item.overrides?.speakerId,
 			...item.overrides,
 		}));
 	} else {
 		const jsonInput = executeFunctions.getNodeParameter('textsJson', itemIndex) as TextItem[];
 		textItems = jsonInput.map((item) => ({
 			text: item.text,
-			speakerId: item.speakerId !== undefined ? item.speakerId : undefined,
-			prePhonemeLength: item.prePhonemeLength !== undefined ? item.prePhonemeLength : undefined,
-			postPhonemeLength: item.postPhonemeLength !== undefined ? item.postPhonemeLength : undefined,
+			speakerId: item.speakerId,
+			speedScale: item.speedScale,
+			pitchScale: item.pitchScale,
+			intonationScale: item.intonationScale,
+			volumeScale: item.volumeScale,
+			prePhonemeLength: item.prePhonemeLength,
+			postPhonemeLength: item.postPhonemeLength,
 		}));
 	}
 
@@ -188,15 +192,15 @@ export async function multiSynthesize(
 		);
 		const audioQuery = (await queryResponse.json()) as AudioQuery;
 
-		// AudioQueryパラメータを上書き（per-textオーバーライドあり）
-		applyAudioQueryParams(audioQuery, executeFunctions, itemIndex, {
-			speedScale: item.speedScale,
-			pitchScale: item.pitchScale,
-			intonationScale: item.intonationScale,
-			volumeScale: item.volumeScale,
-			prePhonemeLength: item.prePhonemeLength,
-			postPhonemeLength: item.postPhonemeLength,
-		});
+		// AudioQueryパラメータを上書き（per-text > ベース設定 > APIデフォルト）
+		audioQuery.speedScale = item.speedScale ?? baseAudioParams.speedScale ?? audioQuery.speedScale;
+		audioQuery.pitchScale = item.pitchScale ?? baseAudioParams.pitchScale ?? audioQuery.pitchScale;
+		audioQuery.intonationScale = item.intonationScale ?? baseAudioParams.intonationScale ?? audioQuery.intonationScale;
+		audioQuery.volumeScale = item.volumeScale ?? baseAudioParams.volumeScale ?? audioQuery.volumeScale;
+		audioQuery.prePhonemeLength = item.prePhonemeLength ?? baseAudioParams.prePhonemeLength ?? audioQuery.prePhonemeLength;
+		audioQuery.postPhonemeLength = item.postPhonemeLength ?? baseAudioParams.postPhonemeLength ?? audioQuery.postPhonemeLength;
+		audioQuery.outputSamplingRate = executeFunctions.getNodeParameter('outputSamplingRate', itemIndex) as number;
+		audioQuery.outputStereo = executeFunctions.getNodeParameter('outputStereo', itemIndex) as boolean;
 
 		// 音声合成
 		const synthesisResponse = await apiRequest(

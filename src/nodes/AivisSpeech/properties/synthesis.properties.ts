@@ -28,6 +28,69 @@ export const synthesisProperties: INodeProperties[] = [
 		description: '話者のスタイルID（話者一覧取得で確認可能）',
 	},
 	{
+		displayName: 'ベース音声設定',
+		name: 'baseAudioParams',
+		type: 'collection',
+		default: {},
+		placeholder: '設定を追加',
+		displayOptions: {
+			show: {
+				operation: ['multiSynthesis'],
+			},
+		},
+		description: '全テキスト共通のベース音声設定。個別設定がないテキストはこの値を使用',
+		options: [
+			{
+				displayName: '話速',
+				name: 'speedScale',
+				type: 'number',
+				default: 1.0,
+				typeOptions: { minValue: 0.5, maxValue: 2.0, numberStepSize: 0.1 },
+				description: '話す速さ（0.5〜2.0、デフォルト: 1.0）',
+			},
+			{
+				displayName: '音高',
+				name: 'pitchScale',
+				type: 'number',
+				default: 0.0,
+				typeOptions: { minValue: -0.15, maxValue: 0.15, numberStepSize: 0.01 },
+				description: '声の高さ（-0.15〜0.15、デフォルト: 0.0）',
+			},
+			{
+				displayName: '抑揚',
+				name: 'intonationScale',
+				type: 'number',
+				default: 1.0,
+				typeOptions: { minValue: 0.0, maxValue: 2.0, numberStepSize: 0.1 },
+				description: '抑揚の強さ（0.0〜2.0、デフォルト: 1.0）',
+			},
+			{
+				displayName: '音量',
+				name: 'volumeScale',
+				type: 'number',
+				default: 1.0,
+				typeOptions: { minValue: 0.0, maxValue: 2.0, numberStepSize: 0.1 },
+				description: '音量（0.0〜2.0、デフォルト: 1.0）',
+			},
+			{
+				displayName: '開始無音',
+				name: 'prePhonemeLength',
+				type: 'number',
+				default: 0.1,
+				typeOptions: { minValue: 0.0, maxValue: 1.5, numberStepSize: 0.1 },
+				description: '音声開始前の無音の長さ（秒、デフォルト: 0.1）',
+			},
+			{
+				displayName: '終了無音',
+				name: 'postPhonemeLength',
+				type: 'number',
+				default: 0.1,
+				typeOptions: { minValue: 0.0, maxValue: 1.5, numberStepSize: 0.1 },
+				description: '音声終了後の無音の長さ（秒、デフォルト: 0.1）',
+			},
+		],
+	},
+	{
 		displayName: 'バイナリプロパティ名',
 		name: 'binaryPropertyName',
 		type: 'string',
@@ -85,19 +148,19 @@ export const synthesisProperties: INodeProperties[] = [
 						description: '読み上げるテキスト',
 					},
 					{
-						displayName: '話者ID（個別）',
-						name: 'speakerId',
-						type: 'number',
-						default: -1,
-						description: '個別の話者ID（-1 の場合はベースの話者IDを使用）',
-					},
-					{
 						displayName: '個別設定',
 						name: 'overrides',
 						type: 'collection',
 						default: {},
 						placeholder: '個別設定を追加',
 						options: [
+							{
+								displayName: '話者ID',
+								name: 'speakerId',
+								type: 'number',
+								default: 888753760,
+								description: '個別の話者ID。未設定の場合はベースの話者IDを使用',
+							},
 							{
 								displayName: '話速',
 								name: 'speedScale',
@@ -164,7 +227,7 @@ export const synthesisProperties: INodeProperties[] = [
 				inputMode: ['json'],
 			},
 		},
-		description: 'テキスト一覧のJSON配列。各要素: { "text": "...", "speakerId"?: 数値, "prePhonemeLength"?: 数値, "postPhonemeLength"?: 数値 }',
+		description: 'テキスト一覧のJSON配列。各要素: { "text": "...", "speakerId"?: 数値, "speedScale"?: 数値, "pitchScale"?: 数値, "intonationScale"?: 数値, "volumeScale"?: 数値, "prePhonemeLength"?: 数値, "postPhonemeLength"?: 数値 }',
 	},
 	// AudioQueryパラメータ（音声合成簡略用オプション）
 	{
@@ -179,7 +242,7 @@ export const synthesisProperties: INodeProperties[] = [
 		},
 		displayOptions: {
 			show: {
-				operation: ['synthesize', 'multiSynthesis'],
+				operation: ['synthesize'],
 			},
 		},
 		description: '話す速さ（0.5〜2.0、デフォルト: 1.0）',
@@ -196,7 +259,7 @@ export const synthesisProperties: INodeProperties[] = [
 		},
 		displayOptions: {
 			show: {
-				operation: ['synthesize', 'multiSynthesis'],
+				operation: ['synthesize'],
 			},
 		},
 		description: '声の高さ（-0.15〜0.15、デフォルト: 0.0）',
@@ -213,7 +276,7 @@ export const synthesisProperties: INodeProperties[] = [
 		},
 		displayOptions: {
 			show: {
-				operation: ['synthesize', 'multiSynthesis'],
+				operation: ['synthesize'],
 			},
 		},
 		description: '抑揚の強さ（0.0〜2.0、デフォルト: 1.0）',
@@ -230,7 +293,7 @@ export const synthesisProperties: INodeProperties[] = [
 		},
 		displayOptions: {
 			show: {
-				operation: ['synthesize', 'multiSynthesis'],
+				operation: ['synthesize'],
 			},
 		},
 		description: '音量（0.0〜2.0、デフォルト: 1.0）',
@@ -247,7 +310,7 @@ export const synthesisProperties: INodeProperties[] = [
 		},
 		displayOptions: {
 			show: {
-				operation: ['synthesize', 'multiSynthesis'],
+				operation: ['synthesize'],
 			},
 		},
 		description: '音声開始前の無音の長さ（秒、デフォルト: 0.1）',
@@ -264,7 +327,7 @@ export const synthesisProperties: INodeProperties[] = [
 		},
 		displayOptions: {
 			show: {
-				operation: ['synthesize', 'multiSynthesis'],
+				operation: ['synthesize'],
 			},
 		},
 		description: '音声終了後の無音の長さ（秒、デフォルト: 0.1）',
