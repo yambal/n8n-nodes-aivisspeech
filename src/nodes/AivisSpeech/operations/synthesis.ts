@@ -10,6 +10,8 @@ interface AudioQueryOverrides {
 	volumeScale?: number;
 	prePhonemeLength?: number;
 	postPhonemeLength?: number;
+	pauseLength?: number;
+	tempoDynamicsScale?: number;
 }
 
 /** AudioQueryにオーバーライド値を適用する（未設定のフィールドはAPIデフォルトを維持） */
@@ -20,6 +22,8 @@ function applyOverrides(audioQuery: AudioQuery, overrides: AudioQueryOverrides):
 	if (overrides.volumeScale !== undefined) audioQuery.volumeScale = overrides.volumeScale;
 	if (overrides.prePhonemeLength !== undefined) audioQuery.prePhonemeLength = overrides.prePhonemeLength;
 	if (overrides.postPhonemeLength !== undefined) audioQuery.postPhonemeLength = overrides.postPhonemeLength;
+	if (overrides.pauseLength !== undefined) audioQuery.pauseLength = overrides.pauseLength;
+	if (overrides.tempoDynamicsScale !== undefined) audioQuery.tempoDynamicsScale = overrides.tempoDynamicsScale;
 }
 
 export async function synthesize(
@@ -131,6 +135,8 @@ interface TextItem {
 	volumeScale?: number;
 	prePhonemeLength?: number;
 	postPhonemeLength?: number;
+	pauseLength?: number;
+	tempoDynamicsScale?: number;
 }
 
 export async function multiSynthesize(
@@ -158,7 +164,8 @@ export async function multiSynthesize(
 			...item.overrides,
 		}));
 	} else {
-		const jsonInput = executeFunctions.getNodeParameter('textsJson', itemIndex) as TextItem[];
+		const rawJson = executeFunctions.getNodeParameter('textsJson', itemIndex);
+		const jsonInput = (typeof rawJson === 'string' ? JSON.parse(rawJson) : rawJson) as TextItem[];
 		textItems = jsonInput.map((item) => ({
 			text: item.text,
 			speakerId: item.speakerId,
@@ -168,6 +175,8 @@ export async function multiSynthesize(
 			volumeScale: item.volumeScale,
 			prePhonemeLength: item.prePhonemeLength,
 			postPhonemeLength: item.postPhonemeLength,
+			pauseLength: item.pauseLength,
+			tempoDynamicsScale: item.tempoDynamicsScale,
 		}));
 	}
 
@@ -196,6 +205,8 @@ export async function multiSynthesize(
 			volumeScale: item.volumeScale,
 			prePhonemeLength: item.prePhonemeLength,
 			postPhonemeLength: item.postPhonemeLength,
+			pauseLength: item.pauseLength,
+			tempoDynamicsScale: item.tempoDynamicsScale,
 		});
 		audioQuery.outputStereo = executeFunctions.getNodeParameter('outputStereo', itemIndex) as boolean;
 

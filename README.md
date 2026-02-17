@@ -77,6 +77,12 @@ To use this node, you need to configure the AivisSpeech API credentials:
 
 ## Changelog
 
+### 0.4.7
+
+- Added: `pauseLength` and `tempoDynamicsScale` parameters to all synthesis operations
+- Added: full-set JSON sample in multi-text synthesis JSON input default
+- Fixed: JSON input mode now correctly parses string input (`jsonInput.map is not a function`)
+
 ### 0.4.6
 
 - Changed: simple synthesis audio params (speed, pitch, intonation, volume, silence) now use optional "Add Field" collection

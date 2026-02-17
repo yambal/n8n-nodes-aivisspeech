@@ -19,6 +19,9 @@ export interface AudioQuery {
 	volumeScale: number;
 	prePhonemeLength: number;
 	postPhonemeLength: number;
+	pauseLength: number | null;
+	pauseLengthScale: number;
+	tempoDynamicsScale: number;
 	outputSamplingRate: number;
 	outputStereo: boolean;
 	kana: string;
