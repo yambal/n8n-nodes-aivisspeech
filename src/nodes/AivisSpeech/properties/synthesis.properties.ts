@@ -28,7 +28,7 @@ export const synthesisProperties: INodeProperties[] = [
 		description: '話者のスタイルID（話者一覧取得で確認可能）',
 	},
 	{
-		displayName: 'ファイル名',
+		displayName: 'バイナリ名',
 		name: 'filename',
 		type: 'string',
 		default: '',
