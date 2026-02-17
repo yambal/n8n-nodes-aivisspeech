@@ -3,6 +3,7 @@ import { getSpeakers } from './speakers';
 import { synthesize, audioQuery, synthesisFromQuery, multiSynthesize } from './synthesis';
 import { getUserDict, addUserDictWord, updateUserDictWord, deleteUserDictWord } from './userDict';
 import { getParameterGuide } from './parameterGuide';
+import { getFormatGuide } from './formatGuide';
 
 export const operationHandlers: Record<string, OperationHandler> = {
 	getSpeakers,
@@ -15,4 +16,5 @@ export const operationHandlers: Record<string, OperationHandler> = {
 	deleteUserDictWord,
 	multiSynthesis: multiSynthesize,
 	getParameterGuide,
+	getFormatGuide,
 };

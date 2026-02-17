@@ -69,6 +69,12 @@ const operationProperty: INodeProperties = {
 			description: 'パラメータ設定ガイド（Markdown）とJSON入力フォーマット定義を取得',
 			action: 'パラメータガイドを取得',
 		},
+		{
+			name: 'フォーマットガイド取得',
+			value: 'getFormatGuide',
+			description: 'AIプロンプト用のJSON生成指示書（Markdown）を取得',
+			action: 'フォーマットガイドを取得',
+		},
 	],
 	default: 'synthesize',
 };

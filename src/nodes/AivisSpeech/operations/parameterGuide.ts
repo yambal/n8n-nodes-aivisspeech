@@ -255,109 +255,95 @@ API スキーマには VOICEVOX 互換で存在しますが、AivisSpeech の St
 - 長い文は短い文に分割 — 文ごとにより正確な韻律が生成されます
 - 文ごとに異なるスタイルを割り当て可能 — パラメータ調整なしで感情の変化を表現できます`;
 
-const FORMAT_DEFINITION = {
-	description: 'AivisSpeech 複数テキスト音声合成（multiSynthesis）の JSON 入力フォーマット定義',
-	format: {
-		type: 'array',
-		items: {
-			type: 'object',
-			required: ['text'],
-			properties: {
-				text: {
-					type: 'string',
-					description: '合成するテキスト',
-				},
-				speakerId: {
-					type: 'number',
-					description: '話者ID（省略時はベース話者IDを使用）',
-					optional: true,
-				},
-				speedScale: {
-					type: 'number',
-					description: '話速',
-					min: 0.5,
-					max: 2.0,
-					default: 1.0,
-					optional: true,
-				},
-				pitchScale: {
-					type: 'number',
-					description: '音高（⚠️ 0.0以外は音質劣化）',
-					min: -0.15,
-					max: 0.15,
-					default: 0.0,
-					optional: true,
-				},
-				intonationScale: {
-					type: 'number',
-					description: '感情表現の強さ（1.0超は非線形に増幅、上げすぎると破綻）',
-					min: 0.0,
-					max: 2.0,
-					default: 1.0,
-					optional: true,
-				},
-				volumeScale: {
-					type: 'number',
-					description: '音量（1.5超はクリッピングのリスク）',
-					min: 0.0,
-					max: 2.0,
-					default: 1.0,
-					optional: true,
-				},
-				prePhonemeLength: {
-					type: 'number',
-					description: '開始無音（秒）',
-					min: 0.0,
-					max: 1.5,
-					default: 0.1,
-					optional: true,
-				},
-				postPhonemeLength: {
-					type: 'number',
-					description: '終了無音（秒）',
-					min: 0.0,
-					max: 1.5,
-					default: 0.1,
-					optional: true,
-				},
-				pauseLength: {
-					type: 'number',
-					description: '句読点無音（秒）（⚠️ AivisSpeechでは無視される）',
-					default: null,
-					optional: true,
-				},
-				tempoDynamicsScale: {
-					type: 'number',
-					description: 'テンポの緩急（AivisSpeech専用、自然さ向上には1.2〜1.5が効果的）',
-					min: 0.0,
-					max: 2.0,
-					default: 1.0,
-					optional: true,
-				},
+const JSON_SCHEMA = {
+	$schema: 'https://json-schema.org/draft/2020-12/schema',
+	title: 'AivisSpeech MultiSynthesis TextItems',
+	description: 'AivisSpeech 複数テキスト音声合成（multiSynthesis）の JSON 入力スキーマ',
+	type: 'array',
+	items: {
+		type: 'object',
+		required: ['text'],
+		additionalProperties: false,
+		properties: {
+			text: {
+				type: 'string',
+				description: '合成するテキスト',
+			},
+			speakerId: {
+				type: 'integer',
+				description: '話者ID（省略時はベース話者IDを使用）',
+			},
+			speedScale: {
+				type: 'number',
+				description: '話速',
+				minimum: 0.5,
+				maximum: 2.0,
+				default: 1.0,
+			},
+			pitchScale: {
+				type: 'number',
+				description: '音高（0.0以外は音質劣化）',
+				minimum: -0.15,
+				maximum: 0.15,
+				default: 0.0,
+			},
+			intonationScale: {
+				type: 'number',
+				description: '感情表現の強さ（1.0超は非線形に増幅、上げすぎると破綻）',
+				minimum: 0.0,
+				maximum: 2.0,
+				default: 1.0,
+			},
+			volumeScale: {
+				type: 'number',
+				description: '音量（1.5超はクリッピングのリスク）',
+				minimum: 0.0,
+				maximum: 2.0,
+				default: 1.0,
+			},
+			prePhonemeLength: {
+				type: 'number',
+				description: '開始無音（秒）',
+				minimum: 0.0,
+				maximum: 1.5,
+				default: 0.1,
+			},
+			postPhonemeLength: {
+				type: 'number',
+				description: '終了無音（秒）',
+				minimum: 0.0,
+				maximum: 1.5,
+				default: 0.1,
+			},
+			pauseLength: {
+				type: ['number', 'null'],
+				description: '句読点無音（秒）（AivisSpeechでは無視される）',
+				default: null,
+			},
+			tempoDynamicsScale: {
+				type: 'number',
+				description: 'テンポの緩急（AivisSpeech専用、自然さ向上には1.2〜1.5が効果的）',
+				minimum: 0.0,
+				maximum: 2.0,
+				default: 1.0,
 			},
 		},
 	},
-	example: [
-		{ text: 'こんにちは、今日はいい天気ですね。' },
-		{
-			text: 'それでは、本題に入りましょう。',
-			speedScale: 0.9,
-			tempoDynamicsScale: 1.3,
-		},
-		{
-			text: 'これはとても重要なポイントです！',
-			speakerId: 888753760,
-			intonationScale: 1.2,
-			prePhonemeLength: 0.3,
-		},
-	],
-	notes: [
-		'省略されたフィールドはベース設定値（ノード側で設定）またはAPIデフォルトが使用されます',
-		'各テキストごとに異なる話者IDを指定することで、会話形式の音声を生成できます',
-		'pitchScaleは0.0のまま使用することを強く推奨します（音質劣化のため）',
-		'intonationScaleは1.0〜2.0の範囲で内部的に非線形に増幅されるため、1.3以上は慎重にテストしてください',
-		'tempoDynamicsScaleを1.2〜1.5にすると自然な発話リズムになります',
-		'連結時に文間の間を制御したい場合は、postPhonemeLength / prePhonemeLength を調整してください',
+	examples: [
+		[
+			{ text: 'こんにちは、今日はいい天気ですね。' },
+			{
+				text: 'それでは、本題に入りましょう。',
+				speedScale: 0.9,
+				tempoDynamicsScale: 1.3,
+			},
+			{
+				text: 'これはとても重要なポイントです！',
+				speakerId: 888753760,
+				intonationScale: 1.2,
+				prePhonemeLength: 0.3,
+			},
+		],
 	],
 };
 
@@ -369,7 +355,7 @@ export async function getParameterGuide(
 	return {
 		json: {
 			parameterGuide: PARAMETER_GUIDE,
-			formatDefinition: FORMAT_DEFINITION,
+			jsonSchema: JSON_SCHEMA,
 		},
 	};
 }

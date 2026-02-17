@@ -2,7 +2,7 @@ import { INodeProperties } from 'n8n-workflow';
 
 export const synthesisProperties: INodeProperties[] = [
 	{
-		displayName: 'テキスト',
+		displayName: 'テキスト: text',
 		name: 'text',
 		type: 'string',
 		default: '',
@@ -15,7 +15,7 @@ export const synthesisProperties: INodeProperties[] = [
 		description: '読み上げるテキスト',
 	},
 	{
-		displayName: '話者ID',
+		displayName: '話者ID: speakerId',
 		name: 'speakerId',
 		type: 'number',
 		default: 888753760,
@@ -28,7 +28,7 @@ export const synthesisProperties: INodeProperties[] = [
 		description: '話者のスタイルID（話者一覧取得で確認可能）',
 	},
 	{
-		displayName: 'ベース話者ID',
+		displayName: 'ベース話者ID: speakerId',
 		name: 'speakerId',
 		type: 'number',
 		default: 888753760,
@@ -41,7 +41,7 @@ export const synthesisProperties: INodeProperties[] = [
 		description: 'ベースの話者スタイルID（個別設定がないテキストはこのIDを使用）',
 	},
 	{
-		displayName: 'ベース音声設定',
+		displayName: 'ベース音声設定: baseAudioParams',
 		name: 'baseAudioParams',
 		type: 'collection',
 		default: {},
@@ -54,7 +54,7 @@ export const synthesisProperties: INodeProperties[] = [
 		description: '全テキスト共通のベース音声設定。個別設定がないテキストはこの値を使用',
 		options: [
 			{
-				displayName: 'ベース話速',
+				displayName: 'ベース話速: speedScale',
 				name: 'speedScale',
 				type: 'number',
 				default: 1.0,
@@ -62,7 +62,7 @@ export const synthesisProperties: INodeProperties[] = [
 				description: 'ベースの話す速さ（最小: 0.5、最大: 2.0、デフォルト: 1.0）',
 			},
 			{
-				displayName: 'ベース音高',
+				displayName: 'ベース音高: pitchScale',
 				name: 'pitchScale',
 				type: 'number',
 				default: 0.0,
@@ -70,7 +70,7 @@ export const synthesisProperties: INodeProperties[] = [
 				description: 'ベースの声の高さ（最小: -0.15、最大: 0.15、デフォルト: 0.0）',
 			},
 			{
-				displayName: 'ベース感情表現',
+				displayName: 'ベース感情表現: intonationScale',
 				name: 'intonationScale',
 				type: 'number',
 				default: 1.0,
@@ -78,7 +78,7 @@ export const synthesisProperties: INodeProperties[] = [
 				description: 'ベースの感情表現の強弱（最小: 0.0、最大: 2.0、デフォルト: 1.0）。話者スタイルに応じた感情の込め方を調整',
 			},
 			{
-				displayName: 'ベース音量',
+				displayName: 'ベース音量: volumeScale',
 				name: 'volumeScale',
 				type: 'number',
 				default: 1.0,
@@ -86,7 +86,7 @@ export const synthesisProperties: INodeProperties[] = [
 				description: 'ベースの音量（最小: 0.0、最大: 2.0、デフォルト: 1.0）',
 			},
 			{
-				displayName: 'ベース開始無音',
+				displayName: 'ベース開始無音: prePhonemeLength',
 				name: 'prePhonemeLength',
 				type: 'number',
 				default: 0.1,
@@ -94,7 +94,7 @@ export const synthesisProperties: INodeProperties[] = [
 				description: 'ベースの音声開始前の無音の長さ（最小: 0.0秒、最大: 1.5秒、デフォルト: 0.1秒）',
 			},
 			{
-				displayName: 'ベース終了無音',
+				displayName: 'ベース終了無音: postPhonemeLength',
 				name: 'postPhonemeLength',
 				type: 'number',
 				default: 0.1,
@@ -102,7 +102,7 @@ export const synthesisProperties: INodeProperties[] = [
 				description: 'ベースの音声終了後の無音の長さ（最小: 0.0秒、最大: 1.5秒、デフォルト: 0.1秒）',
 			},
 			{
-				displayName: 'ベース句読点無音',
+				displayName: 'ベース句読点無音: pauseLength',
 				name: 'pauseLength',
 				type: 'number',
 				default: 0.0,
@@ -110,7 +110,7 @@ export const synthesisProperties: INodeProperties[] = [
 				description: 'ベースの句読点などの無音時間（最小: 0.0秒、最大: 3.0秒）。未設定の場合はAPIデフォルト（null=自動）を使用',
 			},
 			{
-				displayName: 'ベーステンポ緩急',
+				displayName: 'ベーステンポ緩急: tempoDynamicsScale',
 				name: 'tempoDynamicsScale',
 				type: 'number',
 				default: 1.0,
@@ -120,7 +120,7 @@ export const synthesisProperties: INodeProperties[] = [
 		],
 	},
 	{
-		displayName: 'バイナリプロパティ名',
+		displayName: 'バイナリプロパティ名: binaryPropertyName',
 		name: 'binaryPropertyName',
 		type: 'string',
 		default: 'data',
@@ -133,7 +133,7 @@ export const synthesisProperties: INodeProperties[] = [
 	},
 	// multiSynthesis 専用パラメータ
 	{
-		displayName: '入力方式',
+		displayName: '入力方式: inputMode',
 		name: 'inputMode',
 		type: 'options',
 		options: [
@@ -149,7 +149,7 @@ export const synthesisProperties: INodeProperties[] = [
 		description: 'テキスト一覧の入力方式',
 	},
 	{
-		displayName: 'テキスト一覧',
+		displayName: 'テキスト一覧: texts',
 		name: 'texts',
 		type: 'fixedCollection',
 		typeOptions: {
@@ -169,7 +169,7 @@ export const synthesisProperties: INodeProperties[] = [
 				name: 'textItems',
 				values: [
 					{
-						displayName: 'テキスト',
+						displayName: 'テキスト: text',
 						name: 'text',
 						type: 'string',
 						default: '',
@@ -177,21 +177,21 @@ export const synthesisProperties: INodeProperties[] = [
 						description: '読み上げるテキスト',
 					},
 					{
-						displayName: '個別設定',
+						displayName: '個別設定: overrides',
 						name: 'overrides',
 						type: 'collection',
 						default: {},
 						placeholder: '個別設定を追加',
 						options: [
 							{
-								displayName: '話者ID',
+								displayName: '話者ID: speakerId',
 								name: 'speakerId',
 								type: 'number',
 								default: 888753760,
 								description: '個別の話者ID。未設定の場合はベースの話者IDを使用',
 							},
 							{
-								displayName: '話速',
+								displayName: '話速: speedScale',
 								name: 'speedScale',
 								type: 'number',
 								default: 1.0,
@@ -199,7 +199,7 @@ export const synthesisProperties: INodeProperties[] = [
 								description: '個別の話速（最小: 0.5、最大: 2.0）。未設定の場合はベースの値を使用',
 							},
 							{
-								displayName: '音高',
+								displayName: '音高: pitchScale',
 								name: 'pitchScale',
 								type: 'number',
 								default: 0.0,
@@ -207,7 +207,7 @@ export const synthesisProperties: INodeProperties[] = [
 								description: '個別の音高（最小: -0.15、最大: 0.15）。未設定の場合はベースの値を使用',
 							},
 							{
-								displayName: '感情表現',
+								displayName: '感情表現: intonationScale',
 								name: 'intonationScale',
 								type: 'number',
 								default: 1.0,
@@ -215,7 +215,7 @@ export const synthesisProperties: INodeProperties[] = [
 								description: '個別の感情表現の強弱（最小: 0.0、最大: 2.0）。未設定の場合はベースの値を使用',
 							},
 							{
-								displayName: '音量',
+								displayName: '音量: volumeScale',
 								name: 'volumeScale',
 								type: 'number',
 								default: 1.0,
@@ -223,7 +223,7 @@ export const synthesisProperties: INodeProperties[] = [
 								description: '個別の音量（最小: 0.0、最大: 2.0）。未設定の場合はベースの値を使用',
 							},
 							{
-								displayName: '開始無音',
+								displayName: '開始無音: prePhonemeLength',
 								name: 'prePhonemeLength',
 								type: 'number',
 								default: 0.1,
@@ -231,7 +231,7 @@ export const synthesisProperties: INodeProperties[] = [
 								description: '個別の開始無音（最小: 0.0秒、最大: 1.5秒）。未設定の場合はベースの値を使用',
 							},
 							{
-								displayName: '終了無音',
+								displayName: '終了無音: postPhonemeLength',
 								name: 'postPhonemeLength',
 								type: 'number',
 								default: 0.1,
@@ -239,7 +239,7 @@ export const synthesisProperties: INodeProperties[] = [
 								description: '個別の終了無音（最小: 0.0秒、最大: 1.5秒）。未設定の場合はベースの値を使用',
 							},
 							{
-								displayName: '句読点無音',
+								displayName: '句読点無音: pauseLength',
 								name: 'pauseLength',
 								type: 'number',
 								default: 0.0,
@@ -247,7 +247,7 @@ export const synthesisProperties: INodeProperties[] = [
 								description: '個別の句読点などの無音時間（最小: 0.0秒、最大: 3.0秒）。未設定の場合はベースの値を使用',
 							},
 							{
-								displayName: 'テンポ緩急',
+								displayName: 'テンポ緩急: tempoDynamicsScale',
 								name: 'tempoDynamicsScale',
 								type: 'number',
 								default: 1.0,
@@ -261,7 +261,7 @@ export const synthesisProperties: INodeProperties[] = [
 		],
 	},
 	{
-		displayName: 'テキスト一覧 (JSON)',
+		displayName: 'テキスト一覧 (JSON): textsJson',
 		name: 'textsJson',
 		type: 'json',
 		default: '[\n  { "text": "テキスト1" },\n  { "text": "テキスト2", "speakerId": 888753760, "speedScale": 1.0, "pitchScale": 0.0, "intonationScale": 1.0, "volumeScale": 1.0, "prePhonemeLength": 0.1, "postPhonemeLength": 0.1, "pauseLength": 0.0, "tempoDynamicsScale": 1.0 }\n]',
@@ -273,11 +273,11 @@ export const synthesisProperties: INodeProperties[] = [
 			},
 		},
 		description: 'テキスト一覧のJSON配列。text のみ必須、他はすべてオプション（未指定時はベース設定→APIデフォルトを使用）',
-		hint: '<pre style="font-size:11px;line-height:1.4;margin:4px 0;white-space:pre-wrap">[\n  { "text": "テキスト1" },\n  {\n    "text": "テキスト2",\n    "speakerId": 888753760,\n    "speedScale": 1.0,\n    "pitchScale": 0.0,\n    "intonationScale": 1.0,\n    "volumeScale": 1.0,\n    "prePhonemeLength": 0.1,\n    "postPhonemeLength": 0.1,\n    "pauseLength": 0.0,\n    "tempoDynamicsScale": 1.0\n  }\n]</pre>',
+		hint: '<div style="font-family:monospace;font-size:11px;line-height:1.4;white-space:pre;margin:4px 0">[\n  { "text": "テキスト1" },\n  {\n    "text":                "テキスト2",  <span style="color:#888">// テキスト（必須）</span>\n    "speakerId":           888753760,   <span style="color:#888">// 話者ID</span>\n    "speedScale":          1.0,         <span style="color:#888">// 話速 (0.5〜2.0)</span>\n    "pitchScale":          0.0,         <span style="color:#888">// 音高 (-0.15〜0.15)</span>\n    "intonationScale":     1.0,         <span style="color:#888">// 感情表現 (0.0〜2.0)</span>\n    "volumeScale":         1.0,         <span style="color:#888">// 音量 (0.0〜2.0)</span>\n    "prePhonemeLength":    0.1,         <span style="color:#888">// 開始無音 (0.0〜1.5秒)</span>\n    "postPhonemeLength":   0.1,         <span style="color:#888">// 終了無音 (0.0〜1.5秒)</span>\n    "pauseLength":         0.0,         <span style="color:#888">// 句読点無音 (0.0〜3.0秒)</span>\n    "tempoDynamicsScale":  1.0          <span style="color:#888">// テンポ緩急 (0.0〜2.0)</span>\n  }\n]</div>',
 	},
 	// AudioQueryパラメータ（音声合成簡略用オプション）
 	{
-		displayName: '音声設定',
+		displayName: '音声設定: audioParams',
 		name: 'audioParams',
 		type: 'collection',
 		default: {},
@@ -290,7 +290,7 @@ export const synthesisProperties: INodeProperties[] = [
 		description: '音声のパラメータ設定。未設定の場合はAPIデフォルト値を使用',
 		options: [
 			{
-				displayName: '話速',
+				displayName: '話速: speedScale',
 				name: 'speedScale',
 				type: 'number',
 				default: 1.0,
@@ -298,7 +298,7 @@ export const synthesisProperties: INodeProperties[] = [
 				description: '話す速さ（最小: 0.5、最大: 2.0、デフォルト: 1.0）',
 			},
 			{
-				displayName: '音高',
+				displayName: '音高: pitchScale',
 				name: 'pitchScale',
 				type: 'number',
 				default: 0.0,
@@ -306,7 +306,7 @@ export const synthesisProperties: INodeProperties[] = [
 				description: '声の高さ（最小: -0.15、最大: 0.15、デフォルト: 0.0）',
 			},
 			{
-				displayName: '感情表現',
+				displayName: '感情表現: intonationScale',
 				name: 'intonationScale',
 				type: 'number',
 				default: 1.0,
@@ -314,7 +314,7 @@ export const synthesisProperties: INodeProperties[] = [
 				description: '感情表現の強弱（最小: 0.0、最大: 2.0、デフォルト: 1.0）。話者スタイルに応じた感情の込め方を調整',
 			},
 			{
-				displayName: '音量',
+				displayName: '音量: volumeScale',
 				name: 'volumeScale',
 				type: 'number',
 				default: 1.0,
@@ -322,7 +322,7 @@ export const synthesisProperties: INodeProperties[] = [
 				description: '音量（最小: 0.0、最大: 2.0、デフォルト: 1.0）',
 			},
 			{
-				displayName: '開始無音',
+				displayName: '開始無音: prePhonemeLength',
 				name: 'prePhonemeLength',
 				type: 'number',
 				default: 0.1,
@@ -330,7 +330,7 @@ export const synthesisProperties: INodeProperties[] = [
 				description: '音声開始前の無音の長さ（最小: 0.0秒、最大: 1.5秒、デフォルト: 0.1秒）',
 			},
 			{
-				displayName: '終了無音',
+				displayName: '終了無音: postPhonemeLength',
 				name: 'postPhonemeLength',
 				type: 'number',
 				default: 0.1,
@@ -338,7 +338,7 @@ export const synthesisProperties: INodeProperties[] = [
 				description: '音声終了後の無音の長さ（最小: 0.0秒、最大: 1.5秒、デフォルト: 0.1秒）',
 			},
 			{
-				displayName: '句読点無音',
+				displayName: '句読点無音: pauseLength',
 				name: 'pauseLength',
 				type: 'number',
 				default: 0.0,
@@ -346,7 +346,7 @@ export const synthesisProperties: INodeProperties[] = [
 				description: '句読点などの無音時間（最小: 0.0秒、最大: 3.0秒）。未設定の場合はAPIデフォルト（null=自動）を使用',
 			},
 			{
-				displayName: 'テンポ緩急',
+				displayName: 'テンポ緩急: tempoDynamicsScale',
 				name: 'tempoDynamicsScale',
 				type: 'number',
 				default: 1.0,
@@ -356,7 +356,7 @@ export const synthesisProperties: INodeProperties[] = [
 		],
 	},
 	{
-		displayName: 'ステレオ出力',
+		displayName: 'ステレオ出力: outputStereo',
 		name: 'outputStereo',
 		type: 'boolean',
 		default: false,
@@ -368,7 +368,7 @@ export const synthesisProperties: INodeProperties[] = [
 		description: 'ステレオ（2ch）で出力するか（デフォルト: モノラル）',
 	},
 	{
-		displayName: 'AudioQuery (JSON)',
+		displayName: 'AudioQuery (JSON): audioQueryJson',
 		name: 'audioQueryJson',
 		type: 'json',
 		default: '',
