@@ -77,6 +77,12 @@ To use this node, you need to configure the AivisSpeech API credentials:
 
 ## Changelog
 
+### 0.4.6
+
+- Changed: simple synthesis audio params (speed, pitch, intonation, volume, silence) now use optional "Add Field" collection
+- Changed: multi-text synthesis base params display names prefixed with "ベース" for clarity
+- Removed: sampling rate parameter (uses API default)
+
 ### 0.4.5
 
 - Changed: multi-text synthesis base audio params (speed, pitch, intonation, volume, silence) now use optional "Add Field" collection instead of always-visible fields

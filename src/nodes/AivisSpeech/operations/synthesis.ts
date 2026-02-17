@@ -2,7 +2,7 @@ import { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
 import { apiRequest } from '../helpers';
 import { AudioQuery } from '../types';
 
-/** per-textオーバーライド可能なAudioQueryパラメータ */
+/** オプションのAudioQueryパラメータ */
 interface AudioQueryOverrides {
 	speedScale?: number;
 	pitchScale?: number;
@@ -12,21 +12,14 @@ interface AudioQueryOverrides {
 	postPhonemeLength?: number;
 }
 
-/** AudioQueryパラメータをノードパラメータで上書きする */
-function applyAudioQueryParams(
-	audioQuery: AudioQuery,
-	executeFunctions: IExecuteFunctions,
-	itemIndex: number,
-	overrides?: AudioQueryOverrides,
-): void {
-	audioQuery.speedScale = overrides?.speedScale ?? executeFunctions.getNodeParameter('speedScale', itemIndex) as number;
-	audioQuery.pitchScale = overrides?.pitchScale ?? executeFunctions.getNodeParameter('pitchScale', itemIndex) as number;
-	audioQuery.intonationScale = overrides?.intonationScale ?? executeFunctions.getNodeParameter('intonationScale', itemIndex) as number;
-	audioQuery.volumeScale = overrides?.volumeScale ?? executeFunctions.getNodeParameter('volumeScale', itemIndex) as number;
-	audioQuery.prePhonemeLength = overrides?.prePhonemeLength ?? executeFunctions.getNodeParameter('prePhonemeLength', itemIndex) as number;
-	audioQuery.postPhonemeLength = overrides?.postPhonemeLength ?? executeFunctions.getNodeParameter('postPhonemeLength', itemIndex) as number;
-	audioQuery.outputSamplingRate = executeFunctions.getNodeParameter('outputSamplingRate', itemIndex) as number;
-	audioQuery.outputStereo = executeFunctions.getNodeParameter('outputStereo', itemIndex) as boolean;
+/** AudioQueryにオーバーライド値を適用する（未設定のフィールドはAPIデフォルトを維持） */
+function applyOverrides(audioQuery: AudioQuery, overrides: AudioQueryOverrides): void {
+	if (overrides.speedScale !== undefined) audioQuery.speedScale = overrides.speedScale;
+	if (overrides.pitchScale !== undefined) audioQuery.pitchScale = overrides.pitchScale;
+	if (overrides.intonationScale !== undefined) audioQuery.intonationScale = overrides.intonationScale;
+	if (overrides.volumeScale !== undefined) audioQuery.volumeScale = overrides.volumeScale;
+	if (overrides.prePhonemeLength !== undefined) audioQuery.prePhonemeLength = overrides.prePhonemeLength;
+	if (overrides.postPhonemeLength !== undefined) audioQuery.postPhonemeLength = overrides.postPhonemeLength;
 }
 
 export async function synthesize(
@@ -50,7 +43,9 @@ export async function synthesize(
 	const audioQuery = (await queryResponse.json()) as AudioQuery;
 
 	// AudioQueryパラメータを上書き
-	applyAudioQueryParams(audioQuery, executeFunctions, itemIndex);
+	const audioParams = executeFunctions.getNodeParameter('audioParams', itemIndex, {}) as AudioQueryOverrides;
+	applyOverrides(audioQuery, audioParams);
+	audioQuery.outputStereo = executeFunctions.getNodeParameter('outputStereo', itemIndex) as boolean;
 
 	// Step 2: 音声合成
 	const synthesisResponse = await apiRequest(
@@ -192,14 +187,16 @@ export async function multiSynthesize(
 		);
 		const audioQuery = (await queryResponse.json()) as AudioQuery;
 
-		// AudioQueryパラメータを上書き（per-text > ベース設定 > APIデフォルト）
-		audioQuery.speedScale = item.speedScale ?? baseAudioParams.speedScale ?? audioQuery.speedScale;
-		audioQuery.pitchScale = item.pitchScale ?? baseAudioParams.pitchScale ?? audioQuery.pitchScale;
-		audioQuery.intonationScale = item.intonationScale ?? baseAudioParams.intonationScale ?? audioQuery.intonationScale;
-		audioQuery.volumeScale = item.volumeScale ?? baseAudioParams.volumeScale ?? audioQuery.volumeScale;
-		audioQuery.prePhonemeLength = item.prePhonemeLength ?? baseAudioParams.prePhonemeLength ?? audioQuery.prePhonemeLength;
-		audioQuery.postPhonemeLength = item.postPhonemeLength ?? baseAudioParams.postPhonemeLength ?? audioQuery.postPhonemeLength;
-		audioQuery.outputSamplingRate = executeFunctions.getNodeParameter('outputSamplingRate', itemIndex) as number;
+		// AudioQueryパラメータを上書き（ベース設定 → per-text で上書き）
+		applyOverrides(audioQuery, baseAudioParams);
+		applyOverrides(audioQuery, {
+			speedScale: item.speedScale,
+			pitchScale: item.pitchScale,
+			intonationScale: item.intonationScale,
+			volumeScale: item.volumeScale,
+			prePhonemeLength: item.prePhonemeLength,
+			postPhonemeLength: item.postPhonemeLength,
+		});
 		audioQuery.outputStereo = executeFunctions.getNodeParameter('outputStereo', itemIndex) as boolean;
 
 		// 音声合成
